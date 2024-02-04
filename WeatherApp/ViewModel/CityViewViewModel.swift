@@ -13,7 +13,7 @@ final class CityViewViewModel: ObservableObject {
     
     @Published var weather = WeatherResponse.empty()
     
-    @Published var city: String = "Moscow" {
+    @Published var city: String = "Krakow" {
         didSet {
             getLocation()
         }
@@ -49,7 +49,7 @@ final class CityViewViewModel: ObservableObject {
         if weather.current.weather.count > 0 {
             return weather.current.weather[0].icon
         }
-        return "sun.max.fill"
+        return "dayClearSky"
     }
     
     var temperature: String {
@@ -80,11 +80,12 @@ final class CityViewViewModel: ObservableObject {
     }
     
     func getTempFor(temp: Double) -> String {
-        return String(format: "%0.1f", temp)
+        let celsius = (temp - 32) * 5/9
+        return String(format: "%0.1f", celsius)
     }
     
     func getDayFor(timestamp: Int) -> String {
-        return dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(timestamp)))
+        return dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(timestamp)))
     }
     
     private func getLocation() {
@@ -100,7 +101,7 @@ final class CityViewViewModel: ObservableObject {
             let urlString = API.getURLFor(lat: coord.latitude, lon: coord.longitude)
             getWeatherInternal(city: city, for: urlString)
         } else {
-            let urlString = API.getURLFor(lat: 55.7522, lon: 37.6156)
+            let urlString = API.getURLFor(lat: 50.059172, lon: 19.9370435)
             getWeatherInternal(city: city, for: urlString)
         }
     }
@@ -155,7 +156,7 @@ final class CityViewViewModel: ObservableObject {
         case "50d":
             return "dayMist"
         case "50n":
-            return "dayMist"
+            return "nightMist"
         default:
             return "dayClearSky"
         }
@@ -192,7 +193,7 @@ final class CityViewViewModel: ObservableObject {
         case "11n":
             return Image(systemName: "cloud.bolt.fill") //"thunderstorm_night"
         case "13d":
-            return Image (systemName: "cloud. snow.fill") //"snow"
+            return Image (systemName: "cloud.snow.fill") //"snow"
         case "13n":
             return Image (systemName: "cloud.snow.fill") //"snow"
         case "50d":

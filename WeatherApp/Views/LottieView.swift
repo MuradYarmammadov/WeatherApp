@@ -21,18 +21,17 @@ struct LottieView: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: UIViewRepresentableContext<LottieView>) {
         uiView.subviews.forEach({$0.removeFromSuperview()})
         
-        var animationView = LottieAnimationView()
+        let animationView = LottieAnimationView(name: name)
         animationView.translatesAutoresizingMaskIntoConstraints = false
         uiView.addSubview(animationView)
         
         NSLayoutConstraint.activate([
             animationView.widthAnchor.constraint(equalTo: uiView.widthAnchor),
-            animationView.heightAnchor.constraint(equalTo: uiView.heightAnchor),
+            animationView.heightAnchor.constraint(equalTo: uiView.heightAnchor)
         ])
         
-        animationView = .init(name: name)
-        animationView.contentMode = .scaleAspectFit
         animationView.loopMode = loopMode
+        animationView.contentMode = .scaleAspectFit
         animationView.play()
     }
 }

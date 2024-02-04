@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuHeaderView: View {
     
     @ObservedObject var cityVM: CityViewViewModel
-    @State private var searchTerm = "Moscow"
+    @State private var searchTerm = "Krakow"
     
     var body: some View {
         HStack {
